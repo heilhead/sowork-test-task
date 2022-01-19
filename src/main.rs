@@ -11,7 +11,7 @@ use std::fs::File;
 use std::io::BufReader;
 use std::path::Path;
 
-// Declare the arguments our program requires - `clap` will handle the parsing and the rest.
+// Declare the arguments that our program requires and `clap` will handle the rest.
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Args {
@@ -28,12 +28,11 @@ fn read_test_input_from_file<P: AsRef<Path>>(path: P) -> Result<TestInput> {
 }
 
 fn main() {
-    // Parse arguments using `clap`. It'll actually handle argument help and will bail if required args are
-    // not found.
+    // Parse arguments using `clap`. It'll handle argument help and will bail if required args are not found.
     let args = Args::parse();
 
-    // See if we manage to read the data. All kinds of errors should be handled here - i.e. file
-    // inaccessible, malformed data etc.
+    // See if we manage to read the data. All possible errors should be handled here, i.e. inaccessible file,
+    // malformed data etc.
     let result = read_test_input_from_file(&args.filename);
     if !result.is_ok() {
         println!("Error reading input data: {}", result.err().unwrap());
